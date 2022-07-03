@@ -1,0 +1,10 @@
+FROM node As development
+WORKDIR /app
+COPY ./project/package*.json ./
+RUN yarn install
+COPY ./project/* ./
+ARG NODE_ENV=development
+ENV NODE_ENV=${NODE_ENV}
+EXPOSE 3000
+
+CMD yarn install && yarn start:dev

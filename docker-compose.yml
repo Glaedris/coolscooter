@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  backend:
+    container_name: "backend"
+    build:
+      dockerfile: dockerfile.development
+      context: .
+    ports:
+      - 3001:3000
+    volumes:
+      - "./project:/app"
+  db_mongodb:
+    container_name: "db_mongodb"
+    image: mongo
+    volumes:
+      - "./data/mongodb:/data/db"
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root

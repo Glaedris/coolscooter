@@ -1,0 +1,30 @@
+# FROM node As development
+# WORKDIR /app
+# COPY ./project/package*.json .
+# RUN npm install
+# COPY ./project/* .
+# RUN npm run build
+
+
+# FROM node As production
+# ARG NODE_ENV=production
+# ENV NODE_ENV=${NODE_ENV}
+# WORKDIR /app
+# COPY --from=development ./package*.json .
+# RUN npm install --only=production
+# COPY --from=development . .
+# COPY --from=development /app/dist ./dist
+# EXPOSE 3000
+# CMD ["node", "dist/main"]
+# Base image
+FROM node:16
+
+# Create app directory
+WORKDIR /usr/src/app
+
+# Bundle app source
+COPY ./project/ .
+
+
+# Start the server using the production build
+CMD [ "node", "dist/main.js" ]
